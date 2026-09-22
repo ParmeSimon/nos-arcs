@@ -1,0 +1,49 @@
+{
+  "subtitle": "La saga coop, un arc à la fois.",
+  "games": [
+    {
+      "id": "satisfactory",
+      "name": "Satisfactory",
+      "status": "playing",
+      "tags": ["usine", "automatisation", "coop", "base", "bac-a-sable", "scifi", "exploration", "monde-ouvert"],
+      "order": 0,
+      "addedAt": "2026-09-22T18:00:00.000Z",
+      "finishedAt": null,
+      "rating": null,
+      "notes": ""
+    },
+    {
+      "id": "valheim",
+      "name": "Valheim",
+      "status": "backlog",
+      "tags": ["survie", "coop", "base", "craft", "exploration", "monde-ouvert", "fantasy", "combat"],
+      "order": 1,
+      "addedAt": "2026-09-22T18:00:00.000Z",
+      "finishedAt": null,
+      "rating": null,
+      "notes": ""
+    },
+    {
+      "id": "scrap-mechanic",
+      "name": "Scrap Mechanic",
+      "status": "backlog",
+      "tags": ["bac-a-sable", "vehicules", "coop", "physique", "creatif", "voxel", "craft"],
+      "order": 2,
+      "addedAt": "2026-09-22T18:00:00.000Z",
+      "finishedAt": null,
+      "rating": null,
+      "notes": ""
+    },
+    {
+      "id": "albion-online",
+      "name": "Albion Online",
+      "status": "backlog",
+      "tags": ["mmo", "coop", "pvp", "fantasy", "bac-a-sable", "monde-ouvert", "economie"],
+      "order": 3,
+      "addedAt": "2026-09-22T18:00:00.000Z",
+      "finishedAt": null,
+      "rating": null,
+      "notes": ""
+    }
+  ]
+}
