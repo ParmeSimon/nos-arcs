@@ -4,8 +4,18 @@
     {
       "id": "satisfactory",
       "name": "Satisfactory",
+      "steamId": 526870,
       "status": "playing",
-      "tags": ["usine", "automatisation", "coop", "base", "bac-a-sable", "scifi", "exploration", "monde-ouvert"],
+      "tags": [
+        "usine",
+        "automatisation",
+        "coop",
+        "base",
+        "bac-a-sable",
+        "scifi",
+        "exploration",
+        "monde-ouvert"
+      ],
       "order": 0,
       "addedAt": "2026-09-22T18:00:00.000Z",
       "finishedAt": null,
@@ -15,8 +25,18 @@
     {
       "id": "valheim",
       "name": "Valheim",
+      "steamId": 892970,
       "status": "backlog",
-      "tags": ["survie", "coop", "base", "craft", "exploration", "monde-ouvert", "fantasy", "combat"],
+      "tags": [
+        "survie",
+        "coop",
+        "base",
+        "craft",
+        "exploration",
+        "monde-ouvert",
+        "fantasy",
+        "combat"
+      ],
       "order": 1,
       "addedAt": "2026-09-22T18:00:00.000Z",
       "finishedAt": null,
@@ -26,8 +46,17 @@
     {
       "id": "scrap-mechanic",
       "name": "Scrap Mechanic",
+      "steamId": 387990,
       "status": "backlog",
-      "tags": ["bac-a-sable", "vehicules", "coop", "physique", "creatif", "voxel", "craft"],
+      "tags": [
+        "bac-a-sable",
+        "vehicules",
+        "coop",
+        "physique",
+        "creatif",
+        "voxel",
+        "craft"
+      ],
       "order": 2,
       "addedAt": "2026-09-22T18:00:00.000Z",
       "finishedAt": null,
@@ -37,8 +66,17 @@
     {
       "id": "albion-online",
       "name": "Albion Online",
+      "steamId": 761890,
       "status": "backlog",
-      "tags": ["mmo", "coop", "pvp", "fantasy", "bac-a-sable", "monde-ouvert", "economie"],
+      "tags": [
+        "mmo",
+        "coop",
+        "pvp",
+        "fantasy",
+        "bac-a-sable",
+        "monde-ouvert",
+        "economie"
+      ],
       "order": 3,
       "addedAt": "2026-09-22T18:00:00.000Z",
       "finishedAt": null,

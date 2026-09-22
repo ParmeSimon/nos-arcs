@@ -77,7 +77,30 @@ Adapte `name` si tu as choisi un nom de dépôt différent de `nos-arcs`.
 
 ---
 
-## Utilisation au quotidien
+## Enregistrement automatique (recommandé)
+
+Chaque modification peut être commitée directement dans `games.json`, sans
+copier-coller. Il faut un token GitHub, stocké uniquement dans le navigateur
+(jamais dans le dépôt).
+
+1. Bas de page → **Activer l'enregistrement automatique**.
+2. Crée un token sur <https://github.com/settings/personal-access-tokens/new> :
+   *Fine-grained*, **Only select repositories** → ce dépôt,
+   **Permissions → Contents : Read and write**.
+3. Colle-le, **Connecter**.
+
+Ensuite : chaque action est commitée ~1 s après, et la page récupère toute
+seule les modifs de l'autre joueur (toutes les 20 s, et au retour sur l'onglet).
+
+**Ton pote** : un token fine-grained ne peut viser que les dépôts de son
+propriétaire. Soit tu l'ajoutes en collaborateur (*Settings → Collaborators*)
+et il crée un token *classic* avec le scope `public_repo`, soit tu crées un
+second token fine-grained pour lui. Chaque token se révoque à tout moment
+depuis les réglages GitHub.
+
+Sans token, l'ancien mode manuel ci-dessous reste disponible.
+
+## Utilisation au quotidien (mode manuel)
 
 1. Sur `arc.simonparme.com`, ajoute un jeu, marque-le terminé, note-le,
    réordonne la file… tout se met à jour à l'écran immédiatement.

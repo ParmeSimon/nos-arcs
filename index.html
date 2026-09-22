@@ -105,6 +105,21 @@ section{ margin-top:34px; }
 .hero h3{ font-family:"Space Grotesk"; font-weight:700; font-size: clamp(24px,5.5vw,32px); letter-spacing:-.02em; margin:10px 0 12px; }
 .hero .chips{ margin-bottom:18px; }
 .hero .actions{ display:flex; flex-wrap:wrap; gap:10px; }
+.hero-grid{ display:grid; grid-template-columns:1fr auto; gap:20px; align-items:center; }
+.hero-main{ min-width:0; }
+
+/* ---------- covers (images Steam) ---------- */
+.cover{
+  position:relative; flex:0 0 auto; overflow:hidden; aspect-ratio:460/215;
+  background:linear-gradient(135deg,var(--panel-3),var(--panel-2)); border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center;
+  font-family:"Space Grotesk"; font-weight:700; color:var(--faint); letter-spacing:-.02em;
+}
+.cover img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+.cover.h{ width:280px; border-radius:12px; font-size:44px; box-shadow:var(--shadow); }
+.cover.q{ width:112px; border-radius:8px; font-size:20px; }
+.cover.d{ width:92px; border-radius:7px; font-size:17px; }
+.cover.r{ width:calc(100% + 30px); margin:-15px -15px 12px; border:none; border-bottom:1px solid var(--line); border-radius:0; font-size:34px; }
 
 .empty-hero{
   border:1px dashed var(--line-2); border-radius:var(--r-lg); padding:26px 22px; text-align:left; color:var(--muted); background:var(--panel-2);
@@ -114,7 +129,7 @@ section{ margin-top:34px; }
 /* ---------- queue ---------- */
 .queue{ display:flex; flex-direction:column; gap:2px; }
 .qrow{
-  display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:14px;
+  display:grid; grid-template-columns:auto auto 1fr auto; align-items:center; gap:14px;
   padding:14px 8px 14px 6px; border-bottom:1px solid var(--line);
 }
 .qrow:first-child{ border-top:1px solid var(--line); }
@@ -126,7 +141,7 @@ section{ margin-top:34px; }
 /* ---------- recommendations ---------- */
 .recogrid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(232px,1fr)); gap:12px; }
 .reco{
-  background:var(--panel); border:1px solid var(--line); border-radius:var(--r-md); padding:15px 15px 14px;
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--r-md); padding:15px 15px 14px; overflow:hidden;
   display:flex; flex-direction:column; box-shadow:var(--shadow);
 }
 .reco .name{ font-family:"Space Grotesk"; font-weight:600; font-size:16px; letter-spacing:-.01em; }
@@ -135,6 +150,10 @@ section{ margin-top:34px; }
 .reco .why b{ color:var(--peri); font-weight:600; }
 .reco .whytags{ display:flex; flex-wrap:wrap; gap:5px; margin-top:6px; }
 .reco .foot{ margin-top:auto; display:flex; gap:8px; align-items:center; }
+.reco .foot .sm-spacer{ flex:1 1 auto; display:block; }
+.sec-head .count .linkbtn{ font-size:13px; color:var(--peri); font-weight:600; }
+.reco-hidden{ margin-top:12px; color:var(--faint); font-size:12.5px; }
+.reco-hidden .linkbtn{ color:var(--peri); }
 
 /* ---------- done timeline ---------- */
 .tl{ position:relative; margin-left:6px; padding-left:24px; }
@@ -142,6 +161,7 @@ section{ margin-top:34px; }
 .done-item{ position:relative; padding:4px 0 20px; }
 .done-item:before{ content:""; position:absolute; left:-24px; top:8px; width:11px; height:11px; border-radius:50%; background:var(--panel); border:2px solid var(--mint); box-shadow:0 0 0 4px var(--bg); }
 .done-item .rowtop{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.done-item .dhead{ display:flex; align-items:center; gap:12px; min-width:0; }
 .done-item .name{ font-family:"Space Grotesk"; font-weight:600; font-size:17px; letter-spacing:-.01em; }
 .done-item .date{ color:var(--faint); font-size:12.5px; font-variant-numeric:tabular-nums; white-space:nowrap; }
 .stars{ display:inline-flex; gap:2px; margin-top:7px; }
@@ -194,11 +214,12 @@ section{ margin-top:34px; }
 /* ---------- add form ---------- */
 .addbar{ margin-top:14px; }
 .addcard{ margin-top:12px; background:var(--panel); border:1px solid var(--line); border-radius:var(--r-md); padding:16px; box-shadow:var(--shadow); }
-.addcard input.name{
+.addcard input.name, .addcard input.steam{
   width:100%; background:var(--panel-2); color:var(--ink); border:1px solid var(--line-2); border-radius:var(--r-sm);
   padding:11px 13px; font:inherit; font-size:15.5px; outline:none;
 }
-.addcard input.name:focus{ box-shadow:0 0 0 2px var(--peri-edge); border-color:transparent; }
+.addcard input.steam{ font-size:14px; padding:9px 12px; }
+.addcard input.name:focus, .addcard input.steam:focus{ box-shadow:0 0 0 2px var(--peri-edge); border-color:transparent; }
 .addcard .lbl{ font-size:12.5px; color:var(--muted); margin:14px 2px 8px; }
 .tagpick{ display:flex; flex-wrap:wrap; gap:7px; }
 .tagopt{
@@ -237,8 +258,18 @@ section{ margin-top:34px; }
 .savebar-btns{ display:flex; gap:8px; flex:0 0 auto; }
 
 /* save modal */
-#savemodal{ position:fixed; inset:0; z-index:60; display:flex; align-items:center; justify-content:center; padding:16px; }
-#savemodal[hidden]{ display:none; }
+#savemodal, #ghmodal{ position:fixed; inset:0; z-index:60; display:flex; align-items:center; justify-content:center; padding:16px; }
+#savemodal[hidden], #ghmodal[hidden]{ display:none; }
+#savebar[data-state="saved"] .savebar-txt:before{ background:var(--mint); box-shadow:0 0 0 4px var(--mint-tint); }
+#savebar[data-state="error"] .savebar-txt:before{ background:#e0574f; box-shadow:0 0 0 4px rgba(224,87,79,.15); }
+.gh-steps{ margin:0 0 14px; padding-left:20px; color:var(--muted); font-size:13.5px; line-height:1.7; }
+.gh-steps a{ color:var(--peri); }
+.gh-steps code, .gh-note code{ background:var(--panel-2); border:1px solid var(--line); border-radius:6px; padding:1px 6px; font-size:12.5px; }
+.gh-input{ width:100%; background:var(--panel-2); color:var(--ink); border:1px solid var(--line-2); border-radius:var(--r-sm);
+  padding:10px 12px; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:13px; outline:none; }
+.gh-input:focus{ box-shadow:0 0 0 2px var(--peri-edge); border-color:transparent; }
+.gh-note{ color:var(--faint); font-size:12.5px; margin:8px 0 0; }
+footer.foot .linkbtn{ color:var(--peri); font-size:12.5px; }
 .sm-backdrop{ position:absolute; inset:0; background:rgba(6,9,16,.55); }
 .sm-card{ position:relative; width:100%; max-width:600px; max-height:88vh; overflow:auto;
   background:var(--panel); border:1px solid var(--line-2); border-radius:18px;
@@ -266,6 +297,11 @@ footer.foot{ margin-top:48px; padding-top:18px; border-top:1px solid var(--line)
   .hero .actions{ flex-direction:column; align-items:stretch; }
   .hero .actions .btn{ justify-content:center; }
   .recogrid{ grid-template-columns:1fr; }
+  .hero-grid{ grid-template-columns:1fr; }
+  .cover.h{ width:100%; order:-1; }
+  .qrow{ gap:10px; }
+  .cover.q{ width:76px; font-size:16px; }
+  .cover.d{ width:72px; }
 }
 @media (prefers-reduced-motion: reduce){
   *{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
@@ -357,11 +393,27 @@ window.DATA_FILE = "games.json";
     {name:"Eco", tags:["survie","craft","base","economie","gestion","coop"], blurb:"Construis une civilisation entière sans détruire l'écosystème."}
   ];
 
+  // ---------- Steam : appid connus -> image header.jpg ----------
+  var STEAM_IDS = {
+    "Satisfactory":526870, "Valheim":892970, "Scrap Mechanic":387990, "Albion Online":761890,
+    "Factorio":427520, "Dyson Sphere Program":1366540, "Foundry":983870, "Techtonica":1457320,
+    "Captain of Industry":1594320, "Grounded":962130, "Raft":648800, "Green Hell":815370,
+    "Enshrouded":1203620, "Palworld":1623730, "V Rising":1604030, "Core Keeper":1621690,
+    "Deep Rock Galactic":548430, "Terraria":105600, "Astroneer":361420, "Space Engineers":244850,
+    "Trailmakers":585420, "No Man's Sky":275850, "7 Days to Die":251570, "Sons of the Forest":1326470,
+    "Icarus":1149460, "Abiotic Factor":427410, "Necesse":1169040, "Barotrauma":602960,
+    "Stardew Valley":413150, "Don't Starve Together":322330, "Nightingale":1928980,
+    "Empyrion":383120, "Eco":382310
+  };
+  var STEAM_BY_NORM = {};
+  for(var sk in STEAM_IDS){ STEAM_BY_NORM[String(sk).toLowerCase().replace(/[^a-z0-9]/g,"")] = STEAM_IDS[sk]; }
+  var BAD_IMG = {};
+
   // ---------- state ----------
   var S = {
     phase:"loading",           // loading | ready | error
     games:[], meta:null, dirty:false,
-    ui:{ addOpen:false, addName:"", addTags:{}, noteFor:null, confirmDel:null, saveView:"json" }
+    ui:{ addOpen:false, addName:"", addSteam:"", addTags:{}, noteFor:null, confirmDel:null, saveView:"json", recoPage:0 }
   };
 
   var boardEl = document.getElementById("board");
@@ -377,7 +429,7 @@ window.DATA_FILE = "games.json";
     return null;
   }
   function list(){ return S.games.slice(); }
-  function markDirty(){ S.dirty=true; renderSaveBar(); }
+  function markDirty(){ S.dirty=true; renderSaveBar(); scheduleSync(); }
   function norm(s){ return String(s||"").toLowerCase().replace(/[^a-z0-9]/g,""); }
   function now(){ return new Date().toISOString(); }
 
@@ -396,6 +448,27 @@ window.DATA_FILE = "games.json";
     return '<div class="chips">'+out+'</div>';
   }
 
+  function appIdFor(g){
+    if(g && g.steamId) return g.steamId;
+    return STEAM_BY_NORM[norm(g && g.name)] || null;
+  }
+  function parseSteamId(v){
+    v=String(v||"").trim(); if(!v) return null;
+    var m=v.match(/app\/(\d+)/) || v.match(/^(\d+)$/);
+    return m ? parseInt(m[1],10) : null;
+  }
+  function coverUrl(id){ return "https://shared.steamstatic.com/store_item_assets/steam/apps/"+id+"/header.jpg"; }
+  function coverHtml(g, size){
+    var id=appIdFor(g);
+    var letter=esc(String(g.name||"?").trim().charAt(0).toUpperCase());
+    var img=(id && !BAD_IMG[id]) ? '<img src="'+coverUrl(id)+'" alt="" loading="lazy" data-app="'+id+'">' : '';
+    return '<span class="cover '+size+'" aria-hidden="true">'+letter+img+'</span>';
+  }
+  function steamUrl(g){
+    var id=appIdFor(g);
+    return id ? "https://store.steampowered.com/app/"+id+"/" : "https://store.steampowered.com/search/?term="+encodeURIComponent(g.name);
+  }
+
   function fmtDate(iso){
     if(!iso) return "";
     try{ var d=new Date(iso);
@@ -410,6 +483,7 @@ window.DATA_FILE = "games.json";
     up:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>',
     down:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>',
     trash:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2m-9 0 1 14h8l1-14"/></svg>',
+    x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
     plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
     star:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 18.9 6.1 21.6l1.2-6.5L2.5 9.5l6.6-.9z"/></svg>'
   };
@@ -449,7 +523,7 @@ window.DATA_FILE = "games.json";
     // --- arc en cours ---
     html += '<section><div class="sec-head"><h2>Arc en cours</h2></div>';
     if(playing){
-      html += '<div class="hero">'+
+      html += '<div class="hero"><div class="hero-grid"><div class="hero-main">'+
         '<span class="live"><span class="pulse"></span>En train de jouer</span>'+
         '<h3>'+esc(playing.name)+'</h3>'+
         chipsHtml(playing.tags)+
@@ -457,7 +531,7 @@ window.DATA_FILE = "games.json";
           btn("primary","complete",playing.id,IC.check,"Marquer comme terminé")+
           iconWrap("remove",playing.id,IC.trash,"Retirer")+
         '</div>'+
-      '</div>';
+      '</div>'+coverHtml(playing,"h")+'</div></div>';
     } else {
       html += '<div class="empty-hero"><strong>Aucun arc lancé.</strong>'+
         'Démarre un jeu depuis la file, ou pioche une recommandation plus bas.</div>';
@@ -472,6 +546,7 @@ window.DATA_FILE = "games.json";
         var b=backlog[q];
         html += '<div class="qrow">'+
           '<div class="qnum">'+(q+1)+'</div>'+
+          coverHtml(b,"q")+
           '<div class="qbody"><div class="name">'+esc(b.name)+'</div>'+chipsHtml(b.tags)+'</div>'+
           '<div class="qtools">'+
             iconWrap("start",b.id,IC.play,"Démarrer cet arc")+
@@ -494,16 +569,24 @@ window.DATA_FILE = "games.json";
     html += '</section>';
 
     // --- recommandations ---
-    var recos = recommend();
-    if(recos.length){
+    var allRecos = recommend();
+    var hiddenN = hiddenRecos().length;
+    if(allRecos.length || hiddenN){
+      var pages = Math.max(1, Math.ceil(allRecos.length/RECO_N));
+      var page = S.ui.recoPage % pages;
+      var recos = allRecos.slice(page*RECO_N, page*RECO_N+RECO_N);
       html += '<section><div class="sec-head"><h2>Recommandé pour vous</h2>'+
-        '<span class="count">d\'après vos genres</span></div>';
+        '<span class="count">'+(pages>1
+          ? '<button class="linkbtn" data-action="reco-next">↻ Autres idées ('+(page+1)+'/'+pages+')</button>'
+          : 'd\'après vos genres')+'</span></div>';
+      if(!recos.length) html += '<div class="emptyline">Plus aucune idée dans le catalogue.</div>';
       html += '<div class="recogrid">';
       for(var r=0;r<recos.length;r++){
         var c=recos[r];
         var matchSet={}; c.shared.forEach(function(t){ matchSet[t]=1; });
         var whyLabels = c.shared.slice(0,3).map(function(t){ return TAGS[t]||t; });
         html += '<div class="reco">'+
+          coverHtml(c,"r")+
           '<div class="name">'+esc(c.name)+'</div>'+
           '<div class="blurb">'+esc(c.blurb)+'</div>'+
           '<div class="why">Parce que vous aimez '+
@@ -511,11 +594,18 @@ window.DATA_FILE = "games.json";
           '</div>'+
           '<div class="foot">'+
             btnData("primary sm","add-reco",{n:c.name,t:c.tags.join(",")},IC.plus,"À la file")+
-            '<a class="btn ghost sm" href="https://store.steampowered.com/search/?term='+encodeURIComponent(c.name)+'" target="_blank" rel="noopener">Steam</a>'+
+            '<a class="btn ghost sm" href="'+esc(steamUrl(c))+'" target="_blank" rel="noopener">Steam</a>'+
+            '<span class="sm-spacer"></span>'+
+            '<button class="iconbtn" data-action="reco-hide" data-n="'+esc(c.name)+'" title="Pas intéressé" aria-label="Pas intéressé">'+IC.x+'</button>'+
           '</div>'+
         '</div>';
       }
-      html += '</div></section>';
+      html += '</div>';
+      if(hiddenN){
+        html += '<div class="reco-hidden">'+hiddenN+' idée'+(hiddenN>1?'s':'')+' masquée'+(hiddenN>1?'s':'')+' · '+
+          '<button class="linkbtn" data-action="reco-unhide">Tout réafficher</button></div>';
+      }
+      html += '</section>';
     }
 
     // --- chapitres bouclés ---
@@ -576,7 +666,7 @@ window.DATA_FILE = "games.json";
     }
 
     return '<div class="done-item">'+
-      '<div class="rowtop"><span class="name">'+esc(g.name)+'</span>'+
+      '<div class="rowtop"><span class="dhead">'+coverHtml(g,"d")+'<span class="name">'+esc(g.name)+'</span></span>'+
         (g.finishedAt?'<span class="date">'+esc(fmtDate(g.finishedAt))+'</span>':'')+'</div>'+
       chipsHtml(g.tags)+
       stars+
@@ -598,6 +688,8 @@ window.DATA_FILE = "games.json";
     }).join("");
     return '<div class="addcard">'+
       '<input class="name" type="text" data-action="add-name" placeholder="Nom du jeu" value="'+esc(S.ui.addName)+'" autocomplete="off">'+
+      '<div class="lbl">Lien ou ID Steam (optionnel — pour l\'image)</div>'+
+      '<input class="steam" type="text" data-action="add-steam" placeholder="https://store.steampowered.com/app/…" value="'+esc(S.ui.addSteam||"")+'" autocomplete="off">'+
       '<div class="lbl">Genres (optionnel — sert aux recommandations)</div>'+
       '<div class="tagpick">'+opts+'</div>'+
       '<div class="formfoot">'+
@@ -608,10 +700,13 @@ window.DATA_FILE = "games.json";
   }
 
   // ---------- recommendations ----------
+  var RECO_N = 6;
+  function hiddenRecos(){ return (S.meta && Array.isArray(S.meta.hiddenRecos)) ? S.meta.hiddenRecos : []; }
   function recommend(){
     var GL = list();
     if(!GL.length) return [];
     var owned = {}; GL.forEach(function(g){ owned[norm(g.name)]=1; });
+    hiddenRecos().forEach(function(n){ owned[norm(n)]=1; });
     var w = { playing:3, done:2.6, backlog:1 };
     var tagScore = {};
     GL.forEach(function(g){
@@ -628,7 +723,7 @@ window.DATA_FILE = "games.json";
       out.push({ name:c.name, blurb:c.blurb, tags:c.tags, score:score, shared:shared });
     });
     out.sort(function(a,b){ return b.score-a.score || a.name.localeCompare(b.name); });
-    return out.slice(0,6);
+    return out;
   }
 
   // ---------- helpers ----------
@@ -672,7 +767,7 @@ window.DATA_FILE = "games.json";
       S.ui.noteFor=null; update(id,{notes:val});
     },
     "toggle-add": function(){ S.ui.addOpen=true; render(); var n=document.querySelector('[data-action="add-name"]'); if(n) n.focus(); },
-    "add-cancel": function(){ S.ui.addOpen=false; S.ui.addName=""; S.ui.addTags={}; render(); },
+    "add-cancel": function(){ S.ui.addOpen=false; S.ui.addName=""; S.ui.addSteam=""; S.ui.addTags={}; render(); },
     "toggle-tag": function(_,el){
       var t=el.getAttribute("data-tag");
       captureAddName();
@@ -684,8 +779,22 @@ window.DATA_FILE = "games.json";
       var name=(S.ui.addName||"").trim();
       if(!name){ toast("Donne un nom au jeu."); var n=document.querySelector('[data-action="add-name"]'); if(n) n.focus(); return; }
       var tags=Object.keys(S.ui.addTags);
-      S.ui.addOpen=false; S.ui.addName=""; S.ui.addTags={};
-      addGame(name, tags);
+      var sid=parseSteamId(S.ui.addSteam);
+      S.ui.addOpen=false; S.ui.addName=""; S.ui.addSteam=""; S.ui.addTags={};
+      addGame(name, tags, sid);
+    },
+    "reco-next": function(){ S.ui.recoPage++; render(); },
+    "reco-hide": function(_,el){
+      var name=el.getAttribute("data-n");
+      if(!S.meta) S.meta={};
+      S.meta.hiddenRecos = hiddenRecos().concat([name]);
+      markDirty(); render();
+      toast("« "+name+" » masqué des recommandations.");
+    },
+    "reco-unhide": function(){
+      if(!S.meta) S.meta={};
+      S.meta.hiddenRecos = [];
+      markDirty(); render();
     },
     "add-reco": function(_,el){
       var name=el.getAttribute("data-n");
@@ -695,8 +804,8 @@ window.DATA_FILE = "games.json";
   };
 
   function newId(){ return "g"+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
-  function addGame(name, tags){
-    S.games.push({ id:newId(), name:name, status:"backlog", tags:tags||[], order:maxBacklogOrder()+1,
+  function addGame(name, tags, steamId){
+    S.games.push({ id:newId(), name:name, steamId:steamId||STEAM_BY_NORM[norm(name)]||null, status:"backlog", tags:tags||[], order:maxBacklogOrder()+1,
       addedAt:now(), finishedAt:null, rating:null, notes:"" });
     markDirty(); render();
     toast("« "+name+" » ajouté à la file.");
@@ -720,6 +829,8 @@ window.DATA_FILE = "games.json";
   function captureAddName(){
     var n=document.querySelector('[data-action="add-name"]');
     if(n) S.ui.addName = n.value;
+    var st=document.querySelector('[data-action="add-steam"]');
+    if(st) S.ui.addSteam = st.value;
   }
   function focusNote(id){
     setTimeout(function(){
@@ -734,7 +845,7 @@ window.DATA_FILE = "games.json";
     if(!el) return;
     var action = el.getAttribute("data-action");
     if(action==="save-subtitle") return; // handled on blur
-    if(action==="add-name" || action==="note-input") return; // inputs
+    if(action==="add-name" || action==="add-steam" || action==="note-input") return; // inputs
     var fn = A[action];
     if(fn){
       var id = el.getAttribute("data-id");
@@ -746,11 +857,19 @@ window.DATA_FILE = "games.json";
   document.addEventListener("input", function(ev){
     var el=ev.target;
     if(el.getAttribute && el.getAttribute("data-action")==="add-name"){ S.ui.addName=el.value; }
+    if(el.getAttribute && el.getAttribute("data-action")==="add-steam"){ S.ui.addSteam=el.value; }
   });
+  // image Steam introuvable -> on garde la lettre de repli
+  document.addEventListener("error", function(ev){
+    var t=ev.target;
+    if(t && t.tagName==="IMG" && t.getAttribute("data-app")){ BAD_IMG[t.getAttribute("data-app")]=1; t.remove(); }
+  }, true);
   // enter to save new game
   document.addEventListener("keydown", function(ev){
     var el=ev.target;
-    if(el.getAttribute && el.getAttribute("data-action")==="add-name" && ev.key==="Enter"){
+    if(el.id==="gh-token" && ev.key==="Enter"){ ev.preventDefault(); A["gh-save"](); return; }
+    if(ev.key==="Escape" && ghModalEl && !ghModalEl.hidden){ ghModalEl.hidden=true; return; }
+    if(el.getAttribute && /^add-(name|steam)$/.test(el.getAttribute("data-action")||"") && ev.key==="Enter"){
       ev.preventDefault(); A["add-save"]();
     }
   });
@@ -783,10 +902,10 @@ window.DATA_FILE = "games.json";
   // ---------- (dé)sérialisation ----------
   function buildJson(){
     var games = S.games.map(function(g){
-      return { id:g.id, name:g.name, status:g.status, tags:g.tags||[], order:(typeof g.order==="number"?g.order:0),
+      return { id:g.id, name:g.name, steamId:g.steamId||null, status:g.status, tags:g.tags||[], order:(typeof g.order==="number"?g.order:0),
         addedAt:g.addedAt||null, finishedAt:g.finishedAt||null, rating:(g.rating==null?null:g.rating), notes:g.notes||"" };
     });
-    return JSON.stringify({ subtitle:(S.meta&&S.meta.subtitle)||"", games:games }, null, 2) + "\n";
+    return JSON.stringify({ subtitle:(S.meta&&S.meta.subtitle)||"", hiddenRecos:hiddenRecos(), games:games }, null, 2) + "\n";
   }
   function tagLabels(tags){ return (tags||[]).map(function(t){ return TAGS[t]||t; }).join(", "); }
   function starsText(n){ n=n||0; var s=""; for(var i=0;i<5;i++){ s+=(i<n?"★":"☆"); } return s; }
@@ -844,12 +963,10 @@ window.DATA_FILE = "games.json";
 
   function initSaveUI(){
     barEl=document.createElement("div"); barEl.id="savebar";
-    barEl.innerHTML='<div class="savebar-in"><span class="savebar-txt">Modifications non enregistrées</span>'+
-      '<div class="savebar-btns">'+
-        '<button class="btn ghost sm" data-action="save-discard">Annuler</button>'+
-        '<button class="btn primary sm" data-action="save-open">Enregistrer…</button>'+
-      '</div></div>';
     document.body.appendChild(barEl);
+
+    ghModalEl=document.createElement("div"); ghModalEl.id="ghmodal"; ghModalEl.className="modal"; ghModalEl.hidden=true;
+    document.body.appendChild(ghModalEl);
 
     modalEl=document.createElement("div"); modalEl.id="savemodal"; modalEl.hidden=true;
     modalEl.innerHTML=
@@ -875,7 +992,32 @@ window.DATA_FILE = "games.json";
       '</div>';
     document.body.appendChild(modalEl);
   }
-  function renderSaveBar(){ if(barEl) barEl.classList.toggle("show", !!S.dirty); }
+  function renderSaveBar(){
+    if(!barEl) return;
+    var txt, btns, show;
+    if(getToken()){
+      var st=SYNC.status;
+      show = st!=="idle";
+      txt = st==="error" ? "Échec de l'enregistrement : "+esc(SYNC.err)
+          : st==="saved" ? "Enregistré sur GitHub ✓"
+          : "Enregistrement sur GitHub…";
+      btns = st==="error"
+        ? '<button class="btn ghost sm" data-action="gh-open">Réglages</button>'+
+          '<button class="btn primary sm" data-action="gh-retry">Réessayer</button>'
+        : '';
+      barEl.setAttribute("data-state", st);
+    } else {
+      show = !!S.dirty;
+      txt = "Modifications non enregistrées";
+      btns = '<button class="btn ghost sm" data-action="save-discard">Annuler</button>'+
+        '<button class="btn ghost sm" data-action="gh-open">Connecter GitHub</button>'+
+        '<button class="btn primary sm" data-action="save-open">Enregistrer…</button>';
+      barEl.removeAttribute("data-state");
+    }
+    barEl.innerHTML='<div class="savebar-in"><span class="savebar-txt">'+txt+'</span>'+
+      '<div class="savebar-btns">'+btns+'</div></div>';
+    barEl.classList.toggle("show", show);
+  }
   function fillSave(){
     var ta=document.getElementById("save-text"); if(ta) ta.value=saveText();
     var isMd=S.ui.saveView==="md";
@@ -909,24 +1051,169 @@ window.DATA_FILE = "games.json";
   A["save-done"]=function(){ markSaved(); };
   A["save-discard"]=function(){ discardChanges(); };
 
+  // ---------- synchro directe GitHub (API Contents + token perso) ----------
+  var ghModalEl=null;
+  var TOKEN_KEY="nosarcs.ghToken";
+  var SYNC={ sha:null, timer:null, busy:false, again:false, status:"idle", err:"", hideT:null };
+  function getToken(){ try{ return localStorage.getItem(TOKEN_KEY)||""; }catch(e){ return ""; } }
+  function setToken(t){ try{ if(t) localStorage.setItem(TOKEN_KEY,t); else localStorage.removeItem(TOKEN_KEY); }catch(e){} }
+  function repoOk(){ var r=window.REPO||{}; return !!(r.owner&&r.name); }
+  function branch(){ return (window.REPO&&window.REPO.branch)||"main"; }
+  function apiUrl(){ var r=window.REPO||{}; return "https://api.github.com/repos/"+r.owner+"/"+r.name+"/contents/"+dataFile(); }
+  function ghHeaders(){ return { "Authorization":"Bearer "+getToken(), "Accept":"application/vnd.github+json", "X-GitHub-Api-Version":"2022-11-28" }; }
+  function b64enc(s){ return btoa(unescape(encodeURIComponent(s))); }
+  function b64dec(s){ return decodeURIComponent(escape(atob(String(s).replace(/\s/g,"")))); }
+
+  function ghGet(){
+    return fetch(apiUrl()+"?ref="+encodeURIComponent(branch())+"&t="+Date.now(), { headers:ghHeaders(), cache:"no-store" })
+      .then(function(r){
+        if(r.status===404) return { sha:null, data:null };
+        if(!r.ok) throw new Error(r.status===401?"token invalide ou expiré":"HTTP "+r.status);
+        return r.json().then(function(j){ return { sha:j.sha, data:JSON.parse(b64dec(j.content)) }; });
+      });
+  }
+  function ghPut(text){
+    var body={ message:"Carnet : mise à jour", content:b64enc(text), branch:branch() };
+    if(SYNC.sha) body.sha=SYNC.sha;
+    return fetch(apiUrl(), { method:"PUT", headers:ghHeaders(), body:JSON.stringify(body) })
+      .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return { ok:r.ok, status:r.status, j:j }; }); });
+  }
+  function putOrThrow(text){
+    return ghPut(text).then(function(res){
+      if(res.ok){ SYNC.sha=res.j.content.sha; return; }
+      if(res.status===409 || res.status===422){
+        // sha périmé (fichier modifié ailleurs) : on reprend le sha courant et on réécrit
+        return ghGet().then(function(x){ SYNC.sha=x.sha; return ghPut(text); }).then(function(r2){
+          if(!r2.ok) throw new Error((r2.j&&r2.j.message)||"HTTP "+r2.status);
+          SYNC.sha=r2.j.content.sha;
+        });
+      }
+      if(res.status===401) throw new Error("token invalide ou expiré");
+      if(res.status===403 || res.status===404) throw new Error("le token n'a pas accès en écriture au dépôt");
+      throw new Error((res.j&&res.j.message)||"HTTP "+res.status);
+    });
+  }
+  function setSync(st, err){
+    SYNC.status=st; SYNC.err=err||""; clearTimeout(SYNC.hideT);
+    if(st==="saved") SYNC.hideT=setTimeout(function(){ if(SYNC.status==="saved"){ SYNC.status="idle"; renderSaveBar(); } }, 1800);
+    renderSaveBar();
+  }
+  function scheduleSync(){
+    if(!getToken() || !repoOk() || S.phase!=="ready") return;
+    clearTimeout(SYNC.timer); setSync("pending");
+    SYNC.timer=setTimeout(pushNow, 900);
+  }
+  function pushNow(){
+    if(SYNC.busy){ SYNC.again=true; return; }
+    SYNC.busy=true; setSync("saving");
+    var text=buildJson();
+    putOrThrow(text).then(function(){
+      SYNC.busy=false;
+      if(SYNC.again){ SYNC.again=false; pushNow(); return; }
+      if(buildJson()===text){ S.dirty=false; setBaseline(); }
+      setSync("saved");
+    }, function(e){
+      SYNC.busy=false; SYNC.again=false;
+      setSync("error", e && e.message || "erreur réseau");
+    });
+  }
+  // récupère les modifs de l'autre joueur (sans écraser ce qui est en cours d'édition)
+  function pullRemote(){
+    if(!getToken() || !repoOk() || S.phase!=="ready" || S.dirty || SYNC.busy) return;
+    if(document.hidden || S.ui.addOpen || S.ui.noteFor || document.activeElement===subEl) return;
+    ghGet().then(function(x){
+      if(!x.data || x.sha===SYNC.sha || S.dirty || SYNC.busy) return;
+      SYNC.sha=x.sha; applyData(x.data); setBaseline(); render();
+      toast("Carnet mis à jour depuis GitHub.");
+    }, function(){});
+  }
+  setInterval(pullRemote, 20000);
+  document.addEventListener("visibilitychange", function(){ if(!document.hidden) pullRemote(); });
+
+  function renderGhModal(){
+    var on=!!getToken();
+    ghModalEl.innerHTML=
+      '<div class="sm-backdrop" data-action="gh-close"></div>'+
+      '<div class="sm-card" role="dialog" aria-modal="true" aria-labelledby="gh-title">'+
+        '<div class="sm-head"><h3 id="gh-title">Enregistrement automatique</h3>'+
+          '<button class="iconbtn" data-action="gh-close" aria-label="Fermer">'+IC.x+'</button></div>'+
+        '<p class="sm-intro">'+(on
+          ? '<b>Connecté.</b> Chaque modification est commitée directement dans <code>'+esc(dataFile())+'</code>.'
+          : 'Colle un <b>token GitHub</b> pour que chaque modification soit commitée directement dans <code>'+esc(dataFile())+'</code>, sans copier-coller.')+
+        '</p>'+
+        '<ol class="gh-steps">'+
+          '<li>Ouvre <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com → Fine-grained token</a>.</li>'+
+          '<li><i>Repository access</i> : <b>Only select repositories</b> → <code>'+esc((window.REPO||{}).name||"")+'</code>.</li>'+
+          '<li><i>Permissions → Contents</i> : <b>Read and write</b>. Génère, copie.</li>'+
+        '</ol>'+
+        '<input id="gh-token" class="gh-input" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_…" value="">'+
+        '<p class="gh-note">Le token reste uniquement dans ce navigateur (localStorage), jamais dans le dépôt. Ne le partage pas publiquement.</p>'+
+        '<div class="sm-actions">'+
+          '<button class="btn primary sm" data-action="gh-save">'+(on?'Remplacer le token':'Connecter')+'</button>'+
+          (on?'<button class="btn ghost sm" data-action="gh-logout">Déconnecter</button>':'')+
+          '<span class="sm-spacer"></span>'+
+          '<button class="btn ghost sm" data-action="gh-close">Fermer</button>'+
+        '</div>'+
+      '</div>';
+  }
+  function updateFoot(){
+    var foot=document.getElementById("footnote"); if(!foot) return;
+    foot.innerHTML = getToken()
+      ? 'Enregistrement automatique sur GitHub activé · <button class="linkbtn" data-action="gh-open">Réglages</button>'
+      : 'Vos données vivent dans games.json (versionné sur GitHub) · <button class="linkbtn" data-action="gh-open">Activer l\'enregistrement automatique</button>';
+  }
+  A["gh-open"]=function(){ renderGhModal(); ghModalEl.hidden=false; var i=document.getElementById("gh-token"); if(i) i.focus(); };
+  A["gh-close"]=function(){ ghModalEl.hidden=true; };
+  A["gh-retry"]=function(){ pushNow(); };
+  A["gh-logout"]=function(){ setToken(""); SYNC.status="idle"; ghModalEl.hidden=true; updateFoot(); renderSaveBar(); toast("Déconnecté de GitHub."); };
+  A["gh-save"]=function(){
+    var i=document.getElementById("gh-token"); var t=i ? i.value.trim() : "";
+    if(!t){ toast("Colle le token d'abord."); return; }
+    var prev=getToken(); setToken(t);
+    ghGet().then(function(x){
+      ghModalEl.hidden=true; updateFoot(); SYNC.sha=x.sha;
+      if(S.dirty || !x.data){ pushNow(); }            // modifs locales en attente → on les pousse
+      else { applyData(x.data); setBaseline(); render(); setSync("idle"); }
+      toast("Connecté : enregistrement automatique activé.");
+    }, function(e){
+      setToken(prev);
+      toast("Connexion refusée : "+(e&&e.message||"erreur"));
+    });
+  };
+
   // ---------- chargement des données ----------
   function normGame(g){
-    return { id:g.id||newId(), name:g.name||"Sans nom", status:(g.status==="playing"||g.status==="done")?g.status:"backlog",
+    return { id:g.id||newId(), name:g.name||"Sans nom", steamId:parseSteamId(g.steamId), status:(g.status==="playing"||g.status==="done")?g.status:"backlog",
       tags:Array.isArray(g.tags)?g.tags:[], order:(typeof g.order==="number"?g.order:0),
       addedAt:g.addedAt||null, finishedAt:g.finishedAt||null, rating:(g.rating==null?null:g.rating), notes:g.notes||"" };
   }
   function applyData(data){
     var arr=(data&&Array.isArray(data.games))?data.games:[];
     S.games = arr.map(normGame);
-    S.meta = { subtitle:(data&&data.subtitle)||SEED_SUBTITLE };
+    S.meta = { subtitle:(data&&data.subtitle)||SEED_SUBTITLE,
+      hiddenRecos:(data&&Array.isArray(data.hiddenRecos))?data.hiddenRecos.filter(function(n){ return typeof n==="string"; }):[] };
     if(document.activeElement!==subEl) subEl.textContent = S.meta.subtitle;
   }
   function applySeed(){
     S.games = SEED.map(function(s){ return { id:s.id, name:s.name, status:s.status, tags:s.tags, order:s.order,
       addedAt:now(), finishedAt:null, rating:null, notes:"" }; });
-    S.meta = { subtitle:SEED_SUBTITLE }; subEl.textContent = SEED_SUBTITLE;
+    S.meta = { subtitle:SEED_SUBTITLE, hiddenRecos:[] }; subEl.textContent = SEED_SUBTITLE;
   }
   function loadData(){
+    if(getToken() && repoOk()){
+      ghGet().then(function(x){
+        SYNC.sha=x.sha; S.phase="ready";
+        if(x.data){ applyData(x.data); setBaseline(); render(); renderSaveBar(); }
+        else { applySeed(); setBaseline(); render(); markDirty(); } // fichier absent → on le crée
+      }, function(e){
+        loadPages();
+        setSync("error", e && e.message || "erreur réseau");
+      });
+      return;
+    }
+    loadPages();
+  }
+  function loadPages(){
     var url=dataFile()+"?v="+Date.now();
     fetch(url, {cache:"no-store"}).then(function(r){ if(!r.ok) throw 0; return r.json(); })
       .then(function(data){ applyData(data); S.phase="ready"; setBaseline(); render(); })
@@ -939,8 +1226,7 @@ window.DATA_FILE = "games.json";
   // ---------- boot ----------
   function boot(){
     initSaveUI();
-    var foot=document.getElementById("footnote");
-    if(foot) foot.textContent = "Vos données vivent dans games.json (versionné sur GitHub). Le bouton « Enregistrer » génère le fichier à committer.";
+    updateFoot();
     loadData();
   }
 
