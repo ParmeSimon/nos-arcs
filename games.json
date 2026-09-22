@@ -1,10 +1,12 @@
 {
   "subtitle": "La saga coop, un arc à la fois.",
+  "hiddenRecos": [],
   "games": [
     {
       "id": "satisfactory",
       "name": "Satisfactory",
       "steamId": 526870,
+      "image": null,
       "status": "playing",
       "tags": [
         "usine",
@@ -26,6 +28,7 @@
       "id": "valheim",
       "name": "Valheim",
       "steamId": 892970,
+      "image": null,
       "status": "backlog",
       "tags": [
         "survie",
@@ -44,9 +47,34 @@
       "notes": ""
     },
     {
+      "id": "minecraft",
+      "name": "Minecraft",
+      "steamId": null,
+      "image": "covers/minecraft.jpg",
+      "status": "backlog",
+      "tags": [
+        "bac-a-sable",
+        "survie",
+        "coop",
+        "craft",
+        "base",
+        "voxel",
+        "exploration",
+        "monde-ouvert",
+        "creatif",
+        "minage"
+      ],
+      "order": 2,
+      "addedAt": "2026-09-22T13:00:00.000Z",
+      "finishedAt": null,
+      "rating": null,
+      "notes": ""
+    },
+    {
       "id": "scrap-mechanic",
       "name": "Scrap Mechanic",
       "steamId": 387990,
+      "image": null,
       "status": "backlog",
       "tags": [
         "bac-a-sable",
@@ -57,7 +85,7 @@
         "voxel",
         "craft"
       ],
-      "order": 2,
+      "order": 3,
       "addedAt": "2026-09-22T18:00:00.000Z",
       "finishedAt": null,
       "rating": null,
@@ -67,6 +95,7 @@
       "id": "albion-online",
       "name": "Albion Online",
       "steamId": 761890,
+      "image": null,
       "status": "backlog",
       "tags": [
         "mmo",
@@ -77,7 +106,7 @@
         "monde-ouvert",
         "economie"
       ],
-      "order": 3,
+      "order": 4,
       "addedAt": "2026-09-22T18:00:00.000Z",
       "finishedAt": null,
       "rating": null,
